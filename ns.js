@@ -1,12 +1,8 @@
-function Namespace(ns, fn){
+function Namespace(ns, fn, node){
   'use strict';
-  
-  ns = ns.split('.').reduce(function(node, name){
-    return node[name] || (node[name] = {});
-  }, (0, eval)('this'));
-	
-  if('function' == typeof fn)
-    fn.call(ns);
-	
-  return ns;
+	node = (0, eval)('this');
+	ns.split('.').map(function(name){
+	  node = node[name] || (node[name] = {});
+	});
+	return fn && fn.call && fn.call(node), node;
 }
